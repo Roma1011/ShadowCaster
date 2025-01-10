@@ -22,11 +22,11 @@ public sealed class Caster
         switch (shadowType)
         {
             case ShadowType.OnlyField:
-                return AsDestination<TDestination>(source);
+                throw new NotImplementedException();
             case ShadowType.PropAndField:
-                return AsDestination<TDestination>(source);
+                throw new NotImplementedException();
             case ShadowType.PropOrField:
-                return AsDestination<TDestination>(source);
+                throw new NotImplementedException();
             default:
             {
                 PropertyInfo[] sourceProps = GetProperties(source);
