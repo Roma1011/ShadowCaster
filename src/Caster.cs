@@ -21,6 +21,19 @@ public sealed class Caster
         Dictionary<string, object?> transformWarehouse=new();
         switch (shadowType)
         {
+            case ShadowType.KeyValue:
+            {
+                var sourceDic=source as Dictionary<string, object?>;
+                TDestination tDest = new();
+                PropertyInfo[] destProps=GetProperties(tDest);
+                foreach (var prop in destProps)
+                {
+                    sourceDic!.TryGetValue(CharacterCaster.Cast(prop.Name,characterCasing), out object? value);
+                    if (value is not null)
+                        prop.SetValue(tDest,value);
+                }
+                return tDest;
+            }
             case ShadowType.OnlyField:
                 throw new NotImplementedException();
             case ShadowType.PropAndField:
