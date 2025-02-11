@@ -10,7 +10,7 @@ public sealed class Caster
     /// </summary>
     /// <typeparam name="TDestination">Destination type to create</typeparam>
     /// <param name="source">Source object to map from</param>
-    /// <param name="shadowType">Selectable types,to which members type need to cast default only property</param>
+    /// <param name="shadowType">Selectable types,to which members type need to cast default by property</param>
     /// <param name="characterCasing">Specifies the case of characters typed manually</param>
     /// <returns>Mapped destination object</returns>
     public TDestination AsDestination<TDestination>(object source,ShadowType shadowType=ShadowType.ByProp,CharacterCasing characterCasing=CharacterCasing.Normal) where TDestination:new()
