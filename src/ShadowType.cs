@@ -2,9 +2,6 @@
 
 public enum ShadowType
 {
-    OnlyProp=1,
-    OnlyField=2,
-    PropAndField=3,
-    PropOrField=4,
-    KeyValue=5
+    ByProp=1,
+    KeyValue=6
 }

@@ -13,7 +13,7 @@ public sealed class Caster
     /// <param name="shadowType">Selectable types,to which members type need to cast default only property</param>
     /// <param name="characterCasing">Specifies the case of characters typed manually</param>
     /// <returns>Mapped destination object</returns>
-    public TDestination AsDestination<TDestination>(object source,ShadowType shadowType=ShadowType.OnlyProp,CharacterCasing characterCasing=CharacterCasing.Normal) where TDestination:new()
+    public TDestination AsDestination<TDestination>(object source,ShadowType shadowType=ShadowType.ByProp,CharacterCasing characterCasing=CharacterCasing.Normal) where TDestination:new()
     {
         if (source is null)
             throw new InvalidCastException("Source object cannot be null");
@@ -22,8 +22,11 @@ public sealed class Caster
         switch (shadowType)
         {
             case ShadowType.KeyValue:
-            {
-                var sourceDic=source as Dictionary<string, object?>;
+            {   
+                Dictionary<string, object?>? sourceDic = source as Dictionary<string, object?>;
+                if (sourceDic is null)
+                    throw new InvalidOperationException("The source must be a non-null Dictionary<string, object?>. Please ensure the source is of the correct type.");
+                
                 TDestination tDest = new();
                 PropertyInfo[] destProps=GetProperties(tDest);
                 foreach (var prop in destProps)
@@ -34,12 +37,6 @@ public sealed class Caster
                 }
                 return tDest;
             }
-            case ShadowType.OnlyField:
-                throw new NotImplementedException();
-            case ShadowType.PropAndField:
-                throw new NotImplementedException();
-            case ShadowType.PropOrField:
-                throw new NotImplementedException();
             default:
             {
                 PropertyInfo[] sourceProps = GetProperties(source);
@@ -60,7 +57,7 @@ public sealed class Caster
     {
         if (source is null)
             throw new InvalidCastException("Source object cannot be null");
-        return source.GetType().GetProperties();
+        return (source as Type)!.GetTypeInfo().DeclaredProperties.ToArray();
     }
     private void TransformDataFromPropInfo(object source,PropertyInfo[] propertyInfos,ref Dictionary<string, object?> transformWarehouse,CharacterCasing characterCasing=CharacterCasing.Normal)
     {
