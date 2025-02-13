@@ -7,9 +7,9 @@ public enum CharacterCasing
     Upper=2
 }
 
-public class CharacterCaster
+internal sealed class CharacterCaster
 {
-    public static string Cast(string value, CharacterCasing characterCasing) => characterCasing switch
+    internal static string Cast(string value, CharacterCasing characterCasing) => characterCasing switch
     {
         CharacterCasing.Upper => value.ToUpper(),
         CharacterCasing.Lower => value.ToLower(),

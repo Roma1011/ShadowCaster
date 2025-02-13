@@ -2,9 +2,9 @@
 
 namespace ShadowCaster;
 
-public class ShadowSeer
+internal sealed class ShadowSeer
 {
-    public  static bool IsShadow(Type reference, Type? candidate)
+    internal static bool IsShadow(Type reference, Type? candidate)
     {
         if (reference is null)
             throw new InvalidOperationException("Reference can't be null");
@@ -14,6 +14,6 @@ public class ShadowSeer
         
         return false;
     }
-    public static object? DuskWrap(PropertyInfo shadowProperty, object? shadowValue)
+    internal static object? DuskWrap(PropertyInfo shadowProperty, object? shadowValue)
         => shadowValue is null ? default : Convert.ChangeType(shadowValue, shadowProperty.PropertyType);
 }
