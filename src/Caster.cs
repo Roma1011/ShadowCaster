@@ -32,8 +32,15 @@ public sealed class Caster
                 foreach (var prop in destProps)
                 {
                     sourceDic!.TryGetValue(CharacterCaster.Cast(prop.Name,characterCasing), out object? value);
-                    if (value is not null)
+                    if (ShadowSeer.IsShadow(prop.PropertyType, value?.GetType()))
+                    {
                         prop.SetValue(tDest,value);
+                    }else
+                    {
+                        object? wrapped=ShadowSeer.DuskWrap(prop, value);
+                        prop.SetValue(tDest,wrapped);
+                    }
+
                 }
                 return tDest;
             }
@@ -46,8 +53,14 @@ public sealed class Caster
                 foreach (var prop in destProps)
                 {
                     transformWarehouse.TryGetValue(CharacterCaster.Cast(prop.Name,characterCasing), out object? value);
-                    if (value is not null)
+                    if (ShadowSeer.IsShadow(prop.PropertyType, value?.GetType()))
+                    {
                         prop.SetValue(tDest,value);
+                    }else
+                    {
+                        object? wrapped=ShadowSeer.DuskWrap(prop, value);
+                        prop.SetValue(tDest,wrapped);
+                    }
                 }
                 return tDest;
             }
