@@ -9,7 +9,7 @@ internal sealed class ShadowSeer
         if (reference is null)
             throw new InvalidOperationException("Reference can't be null");
         
-        if(reference==candidate)
+        if(reference.IsAssignableFrom(candidate))
             return true;
         
         return false;
